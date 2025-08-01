@@ -1,7 +1,7 @@
 "use client";
-import "../app/globals.css"; // This new line helps link the styles directly.
+import "../app/globals.css";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     Users,
     Target,
@@ -88,13 +88,15 @@ function MarketingDashboard() {
     const [lastUpdate, setLastUpdate] = useState(new Date());
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        loadDashboardData();
-        const interval = setInterval(loadDashboardData, 30000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const loadDashboardData = async () => {
+    const loadDashboardData = useCallback(async () => {
+        const generatePrompt = async (clientName, task) => {
+            setIsGeneratingPrompt(true);
+            setPromptData({ client: clientName, task: task });
+            const generatedMessage = await generatePromptWithGemini(clientName, task);
+            setPromptMessage(generatedMessage);
+            setIsGeneratingPrompt(false);
+        };
+        
         try {
             if (isLoading) setIsLoading(true);
             setError(null);
@@ -113,15 +115,13 @@ function MarketingDashboard() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [isLoading, promptData]);
 
-    const generatePrompt = async (clientName, task) => {
-        setIsGeneratingPrompt(true);
-        setPromptData({ client: clientName, task: task });
-        const generatedMessage = await generatePromptWithGemini(clientName, task);
-        setPromptMessage(generatedMessage);
-        setIsGeneratingPrompt(false);
-    };
+    useEffect(() => {
+        loadDashboardData();
+        const interval = setInterval(loadDashboardData, 30000);
+        return () => clearInterval(interval);
+    }, [loadDashboardData]);
 
     const handleSendPrompt = () => {
         console.log(`Sending prompt to ${promptData.client}: "${promptMessage}"`);
@@ -386,7 +386,7 @@ function MarketingDashboard() {
                             <div key={index} className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-xl">
                                 <div className="flex items-center gap-3">
                                     <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                                    <span className="text-sm text-gray-700 truncate max-w-48">{item.name}</span>
+                                    <span className="text-sm text-gray-800 truncate max-w-48">{item.name}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <div className="w-16 h-2 bg-gray-200 rounded-full">
