@@ -67,7 +67,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     {renderNavItems()}
                 </nav>
                 <div className="mt-8 pt-6 border-t border-white/20">
-                    <p className="text-sm text-gray-700">Powered by Gemini</p>
+                    <p className="text-sm text-gray-700">Powered by Symi</p>
                 </div>
             </div>
         </aside>
