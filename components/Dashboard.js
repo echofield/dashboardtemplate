@@ -1,4 +1,5 @@
 "use client";
+import "../app/globals.css"; // This new line helps link the styles directly.
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -95,7 +96,6 @@ function MarketingDashboard() {
 
     const loadDashboardData = async () => {
         try {
-            // We set isLoading to true only on the first load for a smoother refresh
             if (isLoading) setIsLoading(true);
             setError(null);
             const data = await mockApi.getDashboardData();
@@ -181,7 +181,6 @@ function MarketingDashboard() {
 
     return (
         <div className="space-y-6">
-            {/* Header with Refresh and Update Status */}
             <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
                 <div>
                     <h1 className="text-3xl bg-gradient-to-r from-purple-600 to-teal-600 bg-clip-text text-transparent">
@@ -206,7 +205,6 @@ function MarketingDashboard() {
                 </div>
             </div>
 
-            {/* Interactive Nudge Banner */}
             {promptData && (
                 <div className="rounded-2xl p-6 shadow-xl bg-blue-50/50 border-blue-200" style={glassStyle}>
                     <div className="flex items-start gap-4">
@@ -247,7 +245,6 @@ function MarketingDashboard() {
                 </div>
             )}
 
-            {/* Marketing Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105" style={glassStyle}>
                     <div className="flex items-center justify-between">
@@ -314,7 +311,6 @@ function MarketingDashboard() {
                 </div>
             </div>
 
-            {/* Charts Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="rounded-2xl p-6 shadow-xl" style={glassStyle}>
                     <div className="flex justify-between items-center mb-6">
@@ -379,7 +375,6 @@ function MarketingDashboard() {
                 </div>
             </div>
 
-            {/* Client Milestones & Recent Activity */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="rounded-2xl p-6 shadow-xl" style={glassStyle}>
                     <div className="flex justify-between items-center mb-6">

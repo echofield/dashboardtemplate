@@ -3,8 +3,18 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  // This new "safelist" section prevents Vercel from accidentally removing our styles
+  safelist: [
+    {
+      pattern: /(bg|text|border|backdrop)-.+/,
+    },
+    {
+      pattern: /(grid|flex)-.+/,
+    },
+    'backdrop-blur-lg',
+    'backdrop-filter'
   ],
   theme: {
     extend: {

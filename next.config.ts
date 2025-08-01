@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    optimizeCss: false, // Disables Vercel's CSS optimization
+  },
 };
 
 export default nextConfig;
